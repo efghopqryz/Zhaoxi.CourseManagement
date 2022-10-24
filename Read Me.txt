@@ -1,0 +1,1 @@
+執行檔位置：Zhaoxi.CourseManagement\Zhaoxi.CourseManagement\bin\Debug\Zhaoxi.CourseManagement.exe
