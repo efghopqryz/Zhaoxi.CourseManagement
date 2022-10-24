@@ -1,0 +1,178 @@
+﻿<UserControl x:Class="Zhaoxi.CourseManagement.View.CoursePageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Zhaoxi.CourseManagement.ViewModel"
+             xmlns:zxc="clr-namespace:Zhaoxi.Controls;assembly=Zhaoxi.Controls"
+             xmlns:comm="clr-namespace:Zhaoxi.CourseManagement.Common"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ControlTemplate TargetType="RadioButton" x:Key="CategoryItemButtonTemplate">
+            <Grid Background="Transparent">
+                <Border Background="#eee" CornerRadius="5" Name="back">
+                    <TextBlock Text="{TemplateBinding Content}" Margin="15,6" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="Orange" TargetName="back"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <DataTemplate x:Key="courseTemplate">
+            <Grid>
+                <Grid Name="courseContent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Width="90" Height="60"  CornerRadius="5" Margin="0,15">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="10" Opacity="0.3" Direction="0"/>
+                        </Border.Effect>
+                        <Border.Background>
+                            <ImageBrush ImageSource="{Binding Cover}" Stretch="UniformToFill"/>
+                        </Border.Background>
+                    </Border>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <TextBlock FontSize="16">
+                                <Hyperlink Foreground="#333" Command="{Binding DataContext.OpenCourseUrlCommand,RelativeSource={RelativeSource AncestorType=UserControl,Mode=FindAncestor}}" CommandParameter="{Binding Url}">
+                                    <Hyperlink.Style>
+                                        <Style>
+                                            <Setter Property="TextBlock.TextDecorations" Value="{x:Null}"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="Hyperlink.IsMouseOver" Value="True">
+                                                    <Setter Property="TextBlock.TextDecorations">
+                                                        <Setter.Value>
+                                                            <TextDecorationCollection>
+                                                                <TextDecoration Location="Underline"/>
+                                                            </TextDecorationCollection>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Hyperlink.Style>
+                                    <TextBlock Text="{Binding CourseName}"/>
+                                </Hyperlink>
+                            </TextBlock>
+                            <ItemsControl Margin="15,0" ItemsSource="{Binding Teachers}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="#eee" CornerRadius="5" Margin="5,0">
+                                            <TextBlock Text="{Binding}" Margin="12,3"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                        <TextBlock Text="{Binding Description}" TextWrapping="Wrap" LineHeight="23" Foreground="#aaa"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Margin="5,0">
+                            <Hyperlink>詳情</Hyperlink>
+                        </TextBlock>
+                        <TextBlock Margin="5,0">
+                            <Hyperlink>刪除</Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="skeletonTemplate">
+            <zxc:SkeletonScreen Name="skeleton"/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Border CornerRadius="5" Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border BorderBrush="#ddd" BorderThickness="0,0,0,1" Margin="20,0">
+                <Grid Margin="10,18">
+                    <Grid.RowDefinitions>
+                        <RowDefinition MinHeight="35" Height="auto"/>
+                        <RowDefinition MinHeight="35" Height="auto"/>
+                        <RowDefinition MinHeight="35" Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="課程分類" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="#666"/>
+                        <ItemsControl ItemsSource="{Binding CategoryCourses}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <!--GroupName屬性：可以實現單選-->
+                                    <RadioButton Content="{Binding CategoryName}" IsChecked="{Binding IsSelected}"  Template="{StaticResource CategoryItemButtonTemplate}"  Margin="5,0" GroupName="course"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center">
+                        <TextBlock Text="技術分類" Foreground="#666" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <ItemsControl ItemsSource="{Binding CategoryTechnology}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <RadioButton Content="{Binding CategoryName}" IsChecked="{Binding IsSelected}"  Template="{StaticResource CategoryItemButtonTemplate}" Margin="5,0" GroupName="technology"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="2" VerticalAlignment="Center">
+                        <TextBlock Text="授課老師" Foreground="#666" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <ItemsControl ItemsSource="{Binding CategoryTeacher}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <!--<RadioButton Content="{Binding CategoryName}" IsChecked="{Binding IsSelected}" Template="{StaticResource CategoryItemButtonTemplate}" Margin="5,0" GroupName="teacher" Command="{Binding DataContext.TeacherFilterCommand,RelativeSource={RelativeSource AncestorType=UserControl,Mode=FindAncestor}}" CommandParameter="{Binding CategoryName}"/>-->
+                                    <RadioButton Content="{Binding CategoryName}" IsChecked="{Binding IsSelected}" Template="{StaticResource CategoryItemButtonTemplate}" Margin="5,0" GroupName="teacher" Click="RadioButton_Click"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <Button Grid.Row="2" Content="+ 添加課程" Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                </Grid>
+            </Border>
+
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+                <ItemsControl ItemsSource="{Binding CourseList}" Name="icCourses">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <!--ItemsControl控件：默認是StackPanel-->
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplateSelector>
+                        <comm:CourseDataTemplateSelector DefaultTemplate="{StaticResource courseTemplate}" SkeletonTemplate="{StaticResource  skeletonTemplate}"/>
+                    </ItemsControl.ItemTemplateSelector>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</UserControl>

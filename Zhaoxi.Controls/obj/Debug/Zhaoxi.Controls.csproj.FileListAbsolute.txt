@@ -1,0 +1,13 @@
+E:\C#\專案\WPF\Zhaoxi.CourseManagement\Zhaoxi.Controls\obj\Debug\Instrument.g.cs
+E:\C#\專案\WPF\Zhaoxi.CourseManagement\Zhaoxi.Controls\obj\Debug\Zhaoxi.Controls_MarkupCompile.cache
+E:\C#\專案\WPF\Zhaoxi.CourseManagement\Zhaoxi.Controls\obj\Debug\Zhaoxi.Controls_MarkupCompile.lref
+E:\C#\專案\WPF\Zhaoxi.CourseManagement\Zhaoxi.Controls\bin\Debug\Zhaoxi.Controls.dll
+E:\C#\專案\WPF\Zhaoxi.CourseManagement\Zhaoxi.Controls\bin\Debug\Zhaoxi.Controls.pdb
+E:\C#\專案\WPF\Zhaoxi.CourseManagement\Zhaoxi.Controls\obj\Debug\Instrument.baml
+E:\C#\專案\WPF\Zhaoxi.CourseManagement\Zhaoxi.Controls\obj\Debug\Zhaoxi.Controls.g.resources
+E:\C#\專案\WPF\Zhaoxi.CourseManagement\Zhaoxi.Controls\obj\Debug\Zhaoxi.Controls.csproj.CoreCompileInputs.cache
+E:\C#\專案\WPF\Zhaoxi.CourseManagement\Zhaoxi.Controls\obj\Debug\Zhaoxi.Controls.dll
+E:\C#\專案\WPF\Zhaoxi.CourseManagement\Zhaoxi.Controls\obj\Debug\Zhaoxi.Controls.pdb
+E:\C#\專案\WPF\Zhaoxi.CourseManagement\Zhaoxi.Controls\obj\Debug\Zhaoxi.Controls.csproj.AssemblyReference.cache
+E:\C#\專案\WPF\Zhaoxi.CourseManagement\Zhaoxi.Controls\obj\Debug\SkeletonScreen.g.cs
+E:\C#\專案\WPF\Zhaoxi.CourseManagement\Zhaoxi.Controls\obj\Debug\SkeletonScreen.baml
